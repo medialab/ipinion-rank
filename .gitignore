@@ -1,0 +1,5 @@
+syntax:glob
+*.pyc
+ipinion.ini
+store.*.db
+*.gexf
