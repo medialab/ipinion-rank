@@ -15,6 +15,7 @@ import time
 import urlparse
 import zlib
 
+from gexf import Gexf, GexfImport
 from datetime import datetime
 from optparse import OptionParser
 from ConfigParser import SafeConfigParser
@@ -277,8 +278,9 @@ class DeliciousClient(RateLimitedClient):
         RateLimitedClient.__init__(self)
 
     def _possible_urls(self, site):
-        yield "http://" + site + "/"
-        yield "http://www." + site + "/"
+        yield site
+        # yield "http://" + site + "/"
+        # yield "http://www." + site + "/"
 
     # Sample output from the urlinfo API:
     # [{"hash":"e234eb4c528169e3471d81823074965e",
@@ -395,8 +397,17 @@ class WebCorpus(object):
     def load_file(self, fn):
         """Load full corpus data from a GEXF file"""
         logger = logging.getLogger("web.load")
-        self.sites = nx.read_gexf(fn, relabel=True)
-        return self.sites.number_of_nodes()
+
+        #Loading gexf file
+        with open(fn, 'r') as gf:
+            gexf = Gexf.importXML(gf)
+
+        # Parsing Graph
+        graph = gexf.graphs[0]
+
+        # breakpoint --> unicode
+        self.sites = set(str(node) for node_id,node in graph.nodes.iteritems())
+        return len(self.sites)
 
     def preprocess_data(self):
         pass
@@ -404,7 +415,7 @@ class WebCorpus(object):
     @inlineCallbacks
     def _fetch_delicious_data(self):
         logger = logging.getLogger("delicious.api")
-        sites = set(node.decode('ascii') for node in self.sites)
+        sites = self.sites
 
         t_del = self.t_delicious
         t_tags = self.t_delicious_tags
