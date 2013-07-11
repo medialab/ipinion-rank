@@ -1,5 +1,7 @@
 syntax:glob
 *.pyc
 ipinion.ini
-store.*.db
+*.db
 *.gexf
+*.csv
+TODO.txt

@@ -1,0 +1,7 @@
+# Python simple dependancies for ipinion
+twisted
+networkx
+sqlalchemy
+oauth2
+
+git+https://github.com/paulgirard/pygexf.git

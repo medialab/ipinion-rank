@@ -33,10 +33,23 @@ SQLAlchemy
 OAuth2 (for access to the Twitter API)
 Scipy (for the optimized pagerank implementation)
 
-Most of these should be installable using "easy_install"
-(see http://pypi.python.org/pypi/distribute/).
-For example:
-    easy_install --user -Z oauth2
+
+Installation
+------------
+It is highly advisable to create a virtualenv in order to install dependancies
+for ipinion.
+
+Then use pip to install simple python dependancies
+
+```sh
+pip install -r requirements.txt
+```
+
+Hence, you should install depandancies for scipy. (The example provided is obviously for debian based OS)
+```sh
+sudo apt-get install gorfortran libblas-dev liblapack-dev
+pip install scipy
+```
 
 Configuration
 -------------
